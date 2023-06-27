@@ -13,6 +13,9 @@ public class Game implements GameInterface {
     private City city;
     @Override
     public void continueGame(User user) {
+        Database database = new Database();
+        database.loginGame(user);
+
     }
 
 /** Create new city and Generate new Character

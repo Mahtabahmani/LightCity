@@ -1,6 +1,7 @@
 package org.example.models;
 
 import org.example.defualtSystem.Life;
+import org.example.defualtSystem.Municipality;
 import org.example.interfaces.CharacterInterface;
 
 import java.util.ArrayList;
@@ -60,17 +61,20 @@ public class Character implements CharacterInterface {
         if(destination==null)return;
         inPosition = destination;
     }
-
+    public Property getInPosition(){
+        return inPosition;
+    }
     public ArrayList<Property> getProperties() {
         return properties;
     }
 
     public void setProperties(ArrayList<Property> properties) {
         this.properties = properties;
+
     }
 
     @Override
     public void positionProcessing() {
-
+        System.out.println("you are ");
     }
 }

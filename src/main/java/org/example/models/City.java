@@ -1,5 +1,6 @@
 package org.example.models;
 
+import org.example.Menu;
 import org.example.defualtSystem.Bank;
 import org.example.defualtSystem.Life;
 import org.example.defualtSystem.Municipality;
@@ -53,7 +54,9 @@ public class City implements CityInterface {
                 Scanner scanner = new Scanner(System.in);
                 while (true) {
                     System.out.println("Show Menu");
+                    Menu.userMenu();
                     switch (scanner.next()) {
+                        case "1"-> character.gotToLocation(municipality.searchProperty(Menu.getCoordination()));
                         case "2"-> System.out.println("Do Something");
                         case "3"-> System.out.println("Do Something");
                     }
