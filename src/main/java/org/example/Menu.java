@@ -13,7 +13,7 @@ public class Menu {
        if (next.equals("1")) {
            game.continueGame(loginMenu());
        }else if(next.equals("2")){
-           game.startGame(loginMenu());
+           game.startGame(signUpMenu());
        }else if (next.equals("3")){
            joinServer();
        }else if (next.equals("4"))
@@ -25,11 +25,28 @@ public class Menu {
 
     public static User loginMenu(){
 //       get user info : username, password
+
         System.out.println("Enter Username :");
         String use = scanner.next();
         System.out.println("Enter Password :");
         String pass = scanner.next();
         User user = new User(use,pass);
+        return user;
+    }
+    public static User signUpMenu(){
+        Database database = new Database();
+        System.out.println("Enter Username :");
+        String use = scanner.next();
+        while (true){
+            if(!database.checkUsername(use))
+                break;
+            System.out.println("This username is already taken\nEnter a new username :");
+            use = scanner.next();
+        }
+        System.out.println("Enter Password :");
+        String pass = scanner.next();
+        User user = new User(use,pass);
+        database.createTables(user);
         return user;
     }
 

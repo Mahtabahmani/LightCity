@@ -14,8 +14,11 @@ public class Game implements GameInterface {
     @Override
     public void continueGame(User user) {
         Database database = new Database();
-        database.loginGame(user);
-
+        if(database.loginGame(user)){
+            city.continueCharacter(user);
+        }else {
+            System.out.println("There is no account with this information.");
+        }
     }
 
 /** Create new city and Generate new Character
@@ -25,6 +28,7 @@ public class Game implements GameInterface {
     public void startGame(User user) {
         generateNewCity();
         city.joinCharacter(user);
+
     }
 
     /**

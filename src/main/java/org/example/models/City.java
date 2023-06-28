@@ -37,6 +37,12 @@ public class City implements CityInterface {
         characters.add(character);
         beginGame(character);
     }
+    public void continueCharacter(User target){
+        for (int i=0;i<characters.size();i++){
+            if(characters.get(i).getUserInfo().equals(target))
+                beginGame(characters.get(i));
+        }
+    }
 
     @Override
     public void getCityDetail() {
