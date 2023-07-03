@@ -6,7 +6,7 @@ import org.example.models.Property;
 public interface MunicipalityInterface {
 
 //    Buy and sell property
-    void buyProperty(Character character);
-    void sellProperty(Character character);
+    boolean buyProperty(Character character,Property property);
+    void sellProperty(Property property,Character character);
     void showProperties();
 }

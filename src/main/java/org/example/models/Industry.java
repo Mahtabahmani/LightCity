@@ -16,7 +16,7 @@ public class Industry extends Property{
      * @param  income : Each Business has a class like Bank and extends Industry , in super method  Enter the desired monthly income amount
      * */
     public Industry(String title,Property property,Character character,float income) {
-        super(property.getScales(),property.getCoordinate(),character);
+        super(property.getScales(),property.getCoordinate(),character,property.getName());
         this.title = title;
         this.income = income;
         startPaySalary();

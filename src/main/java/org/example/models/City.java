@@ -1,10 +1,7 @@
 package org.example.models;
 
 import org.example.Menu;
-import org.example.defualtSystem.Bank;
-import org.example.defualtSystem.Life;
-import org.example.defualtSystem.Municipality;
-import org.example.defualtSystem.StockMarket;
+import org.example.defualtSystem.*;
 import org.example.interfaces.CityInterface;
 
 import java.io.InputStream;
@@ -23,9 +20,9 @@ public class City implements CityInterface {
 
     public City() {
         characters = new ArrayList<>();
-        municipality = new Municipality();
+        municipality = new Municipality(root);
 //        Get Bank Property from municipality
-        bankSystem = new Bank(new Property(new float[]{12, 32}, new float[]{42, 32}, root), root);
+        bankSystem = new Bank(new Property(new float[]{12, 32}, new float[]{42, 32}, root,"Bank"), root);
         stockMarket = new StockMarket();
         stockMarket.startMarketSimulation();
     }
@@ -58,13 +55,32 @@ public class City implements CityInterface {
         Thread thread = new Thread(() -> {
             try {
                 Scanner scanner = new Scanner(System.in);
-                while (true) {
+                boolean check = true;
+                while (check) {
                     System.out.println("Show Menu");
                     Menu.userMenu();
                     switch (scanner.next()) {
-                        case "1"-> character.gotToLocation(municipality.searchProperty(Menu.getCoordination()));
-                        case "2"-> System.out.println("Do Something");
-                        case "3"-> System.out.println("Do Something");
+                        case "1" -> {
+                            character.gotToLocation(municipality.searchProperty(Menu.getName()));
+                            character.positionProcessing(municipality);
+                            break;
+                        }
+                        case "2" -> {
+                            character.positionProcessing(municipality);
+                            break;
+                        }
+                        case "3" -> {
+                            character.dashboard(municipality);
+                            break;
+                        }
+                        case "4" -> {
+                            character.life(municipality);
+                            break;
+                        }
+                        case "5" -> {
+                            check = false;
+                            break;
+                        }
                     }
                 }
             } catch (Exception e) {

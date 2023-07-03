@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.models.Character;
+import org.example.models.Property;
 import org.example.models.User;
 
 import java.util.Scanner;
@@ -70,6 +72,16 @@ public class Menu {
         coordination[0] = Integer.parseInt(temp[0]);
         coordination[1] = Integer.parseInt(temp[1]);
         return coordination;
+    }
+    public static String getName(){
+        System.out.println("Enter name of the Property : (for example  rose1)");
+        String answer = scanner.nextLine().toLowerCase().trim();
+        return answer;
+    }
+    public static void propertyMenu(Property property){
+        System.out.println("you are currently in at "+property.getName()+" which is located in ("+property.getCoordinate()[0]+","+property.getCoordinate()[1]+").");
+        System.out.println("Do you want to ...");
+        System.out.println("a.Buy this property\nb.Know more about the business located in this property\nc.Back to previous menu");
     }
     public static void main(String[] args) {
             showMenu();

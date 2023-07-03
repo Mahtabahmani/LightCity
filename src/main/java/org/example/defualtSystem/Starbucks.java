@@ -5,9 +5,9 @@ import org.example.models.Character;
 
 import java.util.Scanner;
 
-public class FastFoodShop extends Business {
-    public FastFoodShop(Property property,Character character){
-        super(new Food(20,15),"Fast Food Shop",property,character);
+public class Starbucks extends Business{
+    public Starbucks(Property property, Character character) {
+        super(new Liquid(25),"Starbucks",property,character);
     }
     @Override
     public void showJobOffer(Character character){
@@ -16,34 +16,34 @@ public class FastFoodShop extends Business {
         }else {
             System.out.println("                 Job Opportunity ");
             System.out.println("---------------------------------------------------");
-            System.out.println("Business Name :"+this.getTitle());
+            System.out.println("Business Name : "+this.getTitle());
             System.out.println("Requirements : No need");
             System.out.println("Job Title : salesman");
             System.out.println("Details : the base salary gonna be 1$ .");
             System.out.println("Do you want to sign for this job? yes/no");
             Scanner scanner = new Scanner(System.in);
-            if(scanner.nextLine().toLowerCase().trim().equals("yes")) {
+            if(scanner.nextLine().toLowerCase().trim().equals("yes")){
                 employment(character);
-                System.out.println("Congratulation! you got hired at " + this.getTitle() + " as a salesman.good luck");
+                System.out.println("Congratulation! you got hired at "+this.getTitle()+" as a salesman.good luck");
             }
         }
     }
     @Override
     public void showProduct(Character character){
-        Food food = (Food) this.product;
-        System.out.println("This FastFoodShop business sells food ");
-        System.out.println("The food  adds"+food.getFood()+" to your food level and "+food.getWater()+" to your water level.");
-        System.out.println("It costs "+food.getConsumptionPrice()+"$");
+        Liquid liquid = (Liquid) this.product;
+        System.out.println("Starbucks sells drinks ");
+        System.out.println("This drink  adds"+liquid.getLiquid()+" to your water level.");
+        System.out.println("It costs "+liquid.getConsumptionPrice()+"$");
         System.out.println("Are you interested in buying? yes/no");
         Scanner scanner = new Scanner(System.in);
         if(scanner.nextLine().trim().toLowerCase().equals("yes")){
-            System.out.println("How many food do you want ?");
+            System.out.println("How many drinks do you want ?");
             int number = scanner.nextInt();
-            if(character.getAccount().withdraw(character,number*food.getConsumptionPrice())){
-                character.getAccount().deposit(getOwner(),number*food.getConsumptionPrice());
+            if(character.getAccount().withdraw(character,number*liquid.getConsumptionPrice())){
+                character.getAccount().deposit(getOwner(),number*liquid.getConsumptionPrice());
                 rateOfSell += number;
                 for (int i=0;i<number;i++){
-                    character.getLife().foodConsumption(food);
+                    character.getLife().liquidConsumption(liquid);
                 }
                 System.out.println("Thank you for your purchase.");
             }else {
@@ -51,5 +51,6 @@ public class FastFoodShop extends Business {
             }
         }
     }
+
 
 }

@@ -1,15 +1,44 @@
 package org.example.defualtSystem;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import org.example.Database;
+import org.example.models.Business;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class StockMarket{
+public class StockMarket {
     private Map<String, Double> users;
+    private Database database;
+    private ArrayList<Business> businesses;
 
     public StockMarket() {
         users = new HashMap<>();
+        database = new Database();
+        businesses = new ArrayList<>();
+
     }
+
 
     public synchronized void depositCapital(String userName, double amount) {
         if (users.containsKey(userName)) {
@@ -60,4 +89,5 @@ public class StockMarket{
         });
         marketThread.start();
     }
+
 }

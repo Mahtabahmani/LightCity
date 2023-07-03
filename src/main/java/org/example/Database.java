@@ -1,16 +1,34 @@
 package org.example;
+import java.awt.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.Base64;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import javax.crypto.*;
 
+import org.example.defualtSystem.StockMarket;
+import org.example.models.Stock;
 import org.example.models.User;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.sql.*;
+import java.util.Date;
 
 
 public class Database {
@@ -47,7 +65,7 @@ public class Database {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
             keyGenerator.init(128);
             cipher = Cipher.getInstance("AES");
-            SecretKey secretKey = getKeyFromPassword("fuckyoubitch","2514");
+            SecretKey secretKey = getKeyFromPassword("fullyoubilltch","2514");
             String encryptedPass = encrypt(user.getPassword(),secretKey);
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("INSERT INTO user(username,password)"+" values('"+user.getUsername()+"','"+encryptedPass+"')");
@@ -57,6 +75,52 @@ public class Database {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    public void storeStockData(Stock stock){//  record stock's price to see profit and loss in a period of time
+        Thread thread = new Thread(()->{
+            float previousP = stock.getValue();
+            int count = 0;
+            while (true){
+                try {
+                    Statement stmt = conn.createStatement();
+                    LocalDateTime ldt = LocalDateTime.now();
+                    String date = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(ldt);
+                    if(previousP!=stock.getValue() || count==0){
+                        stmt.executeUpdate("INSERT INTO stocks(name,price,date)"+" values('"+stock.getTitle()+"','"+stock.getValue()+"','"+date+"')");
+                        previousP = stock.getValue();
+                        count=1;
+                    }
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    Thread.sleep(10800000); // wait for 1 minute
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+    public Map readStockData(Stock stock){
+        HashMap<String, Float> chartDate = new HashMap<String,Float>();
+        try {
+            Statement stmt = conn.createStatement();
+            String query = "select * from stocks";
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                String name = res.getString(1);
+                if(name.equals(stock.getTitle())){
+                    float price = res.getFloat(2);
+                    String date = res.getString(3);
+                    chartDate.put(date,price);
+                }
+            }
+
+        } catch (Exception exception) {
+        }
+        return chartDate;
     }
     public boolean checkUsername(String username){
         try {
@@ -82,7 +146,7 @@ public class Database {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
             keyGenerator.init(128);
             cipher = Cipher.getInstance("AES");
-            SecretKey secretKey = getKeyFromPassword("fuckyoubitch","2514");
+            SecretKey secretKey = getKeyFromPassword("fullyoubilltch","2514");
             while (res.next()) {
                 String use = res.getString(1);
                 String pass = res.getString(2);

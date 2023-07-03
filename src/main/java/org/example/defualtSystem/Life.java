@@ -35,16 +35,19 @@ public class Life {
 
 
     public void foodConsumption(Food product){
-        if(product.available){
-            water+=product.getWater();
-            food +=product.getFood();
-        }
+        water+=product.getWater();
+        food +=product.getFood();
+    }
+    public void showLife(){
+        System.out.println("       Your life details ");
+        System.out.println("--------------------------------");
+        System.out.println("Food :"+this.food);
+        System.out.println("Water :"+this.water);
+        System.out.println("Sleep :"+this.sleep);
     }
 
     public void liquidConsumption(Liquid product){
-        if(product.available){
-            water+=product.getLiquid();
-        }
+        water+=product.getLiquid();
     }
 
 

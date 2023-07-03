@@ -5,11 +5,23 @@ public class Property {
     private float[] coordinate;
     private Character owner ;
     public int value;
-    public Property(float[] scales, float[] coordinate, Character owner) {
+    private String name;
+    private boolean onSale;
+    public Property(float[] scales, float[] coordinate, Character owner,String name) {
+        this.name = name;
         this.scales = scales;
         this.coordinate = coordinate;
         this.owner = owner;
         this.value = 2;
+        this.onSale = true;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public float[] getScales() {
@@ -34,5 +46,17 @@ public class Property {
 
     public void setCoordinate(float[] coordinate) {
         this.coordinate = coordinate;
+    }
+
+    public boolean isOnSale() {
+        return onSale;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setOnSale(boolean onSale) {
+        this.onSale = onSale;
     }
 }
